@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { ErrorType } from "../types/ErrorType";
+import { useEffect, useState } from 'react';
+import { ErrorType } from '../types/ErrorType';
 import cn from 'classnames';
 
 type Props = {
@@ -52,25 +52,25 @@ export const Header: React.FC<Props> = props => {
     try {
       await handleAddTodo(inputValue.trim());
       setInputValue('');
-    } catch (err) { }
-    finally {
+    } catch (err) {
+    } finally {
       inputNameRef?.current?.focus();
-      }
+    }
   };
 
   return (
     <header className="todoapp__header">
-      {/* this button should have `active` class only if all todos are completed */}
       {todosLength !== 0 && (
         <button
           type="button"
-          className={cn("todoapp__toggle-all", { active: allTodosAreCompleted })}
+          className={cn('todoapp__toggle-all', {
+            active: allTodosAreCompleted,
+          })}
           data-cy="ToggleAllButton"
           onClick={handletoggleAll}
         />
       )}
 
-      {/* Add a todo on form submit */}
       <form onSubmit={handleFormSubmit}>
         <input
           data-cy="NewTodoField"

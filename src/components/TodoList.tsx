@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Todo } from "../types/Todo";
-import { TodoItem } from "./TodoItem";
+import { useState } from 'react';
+import { Todo } from '../types/Todo';
+import { TodoItem } from './TodoItem';
 
 type Props = {
   filteredTodos: Todo[];
@@ -8,9 +8,9 @@ type Props = {
   tempTodo: Todo | null;
   loadingTodoIds: number[];
   handleUpdateTodo: (todoToUpdate: Todo) => Promise<void>;
-}
+};
 
-export const TodoList: React.FC<Props> = (props) => {
+export const TodoList: React.FC<Props> = props => {
   const {
     filteredTodos,
     handleDeleteTodo,

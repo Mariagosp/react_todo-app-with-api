@@ -22,4 +22,3 @@ export const createTodo = (newTodo: Omit<Todo, 'id' | 'userId'>) => {
 export const updateTodo = (todo: Todo): Promise<Todo> => {
   return client.patch(`/todos/${todo.id}`, todo);
 };
-

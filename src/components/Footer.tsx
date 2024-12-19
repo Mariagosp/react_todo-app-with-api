@@ -1,5 +1,5 @@
-import { FilterType } from "../types/FilterType";
-import { Todo } from "../types/Todo";
+import { FilterType } from '../types/FilterType';
+import { Todo } from '../types/Todo';
 import cn from 'classnames';
 
 type Props = {

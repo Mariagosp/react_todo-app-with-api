@@ -2,6 +2,10 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { Todo } from '../types/Todo';
 import cn from 'classnames';
 
+type FormEventType =
+  | React.FormEvent<HTMLFormElement>
+  | React.FocusEvent<HTMLFormElement, Element>;
+
 type Props = {
   todo: Todo;
   handleDeleteTodo: (todoId: number) => Promise<void>;
@@ -27,21 +31,25 @@ export const TodoItem: React.FC<Props> = props => {
 
   const handleCheckTodo = () => {
     const updatedTodo = { ...todo, completed: !todo.completed };
+
     handleUpdateTodo(updatedTodo);
   };
 
   const handleDoubleClick = () => {
     setEditedTodoId(todo.id);
-  }
+  };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement> | React.FocusEvent<HTMLFormElement, Element>) => {
+  const handleSubmit = async (event: FormEventType) => {
     event.preventDefault();
 
     const normalizedTitle = todoTitleValue.trim();
+
     if (todo.title === normalizedTitle) {
       setEditedTodoId(null);
+
       return;
     }
+
     if (normalizedTitle === '') {
       try {
         await handleDeleteTodo(todo.id);
@@ -59,14 +67,14 @@ export const TodoItem: React.FC<Props> = props => {
     } catch {
       inputRef?.current?.focus();
     }
-  }
+  };
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Escape') {
       setEditedTodoId(null);
       setTodoTitleValue(todo.title);
     }
-  }
+  };
 
   return (
     <div data-cy="Todo" className={cn('todo', { completed: todo.completed })}>
@@ -89,20 +97,20 @@ export const TodoItem: React.FC<Props> = props => {
             className="todo__title-field"
             placeholder="Empty todo will be deleted"
             value={todoTitleValue}
-            onChange={(event) => setTodoTitleValue(event.target.value)}
+            onChange={event => setTodoTitleValue(event.target.value)}
             onKeyUp={handleKeyUp}
             ref={inputRef}
           />
         </form>
       ) : (
         <>
-            <span
-              data-cy="TodoTitle"
-              className="todo__title"
-              onDoubleClick={handleDoubleClick}
-            >
+          <span
+            data-cy="TodoTitle"
+            className="todo__title"
+            onDoubleClick={handleDoubleClick}
+          >
             {todo.title}
-            </span>
+          </span>
           <button
             type="button"
             className="todo__remove"

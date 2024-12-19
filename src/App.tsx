@@ -21,7 +21,9 @@ import { TodoList } from './components/TodoList';
 
 export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [errorMessage, setErrorMessage] = useState<ErrorType>(ErrorType.Default);
+  const [errorMessage, setErrorMessage] = useState<ErrorType>(
+    ErrorType.Default,
+  );
   const [filter, setFilter] = useState<FilterType>(FilterType.All);
   const [tempTodo, setTempTodo] = useState<Todo | null>(null);
   const [loadingTodoIds, setLoadingTodoIds] = useState<number[]>([]);
@@ -93,7 +95,9 @@ export const App: React.FC = () => {
     try {
       const updatedTodo = await updateTodo(todoToUpdate);
 
-      setTodos(prev => prev.map(todo => (todo.id === updatedTodo.id ? updatedTodo : todo)));
+      setTodos(prev =>
+        prev.map(todo => (todo.id === updatedTodo.id ? updatedTodo : todo)),
+      );
     } catch (err) {
       setErrorMessage(ErrorType.UpdateTodo);
       inputNameRef.current?.focus();
@@ -106,6 +110,7 @@ export const App: React.FC = () => {
   const handletoggleAll = async () => {
     if (notCompletedTodos > 0) {
       const activeTodos = todos.filter(todo => !todo.completed);
+
       activeTodos.forEach(todo =>
         handleUpdateTodo({ ...todo, completed: true }),
       );

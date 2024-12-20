@@ -88,6 +88,7 @@ export const App: React.FC = () => {
     } catch (error) {
       setErrorMessage(ErrorType.AddTodo);
       inputNameRef.current?.focus();
+      throw error;
     } finally {
       setTempTodo(null);
     }

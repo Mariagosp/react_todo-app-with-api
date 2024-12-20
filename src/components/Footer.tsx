@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 type Props = {
   filter: FilterType;
-  notCompletedTodos: number;
+  notCompletedTodosCount: number;
   handleFilterChange: (newFilter: FilterType) => void;
   filteredTodos: Todo[];
   handleClearCompleted: () => Promise<void>;
@@ -12,7 +12,7 @@ type Props = {
 
 export const Footer: React.FC<Props> = props => {
   const {
-    notCompletedTodos,
+    notCompletedTodosCount,
     filter,
     handleFilterChange,
     filteredTodos,
@@ -22,7 +22,7 @@ export const Footer: React.FC<Props> = props => {
   return (
     <footer className="todoapp__footer" data-cy="Footer">
       <span className="todo-count" data-cy="TodosCounter">
-        {notCompletedTodos} items left
+        {notCompletedTodosCount} items left
       </span>
 
       <nav className="filter" data-cy="Filter">
@@ -45,7 +45,7 @@ export const Footer: React.FC<Props> = props => {
         type="button"
         className="todoapp__clear-completed"
         data-cy="ClearCompletedButton"
-        disabled={notCompletedTodos === filteredTodos.length}
+        disabled={notCompletedTodosCount === filteredTodos.length}
         onClick={handleClearCompleted}
       >
         Clear completed

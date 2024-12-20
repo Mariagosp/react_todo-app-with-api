@@ -29,14 +29,19 @@ export const App: React.FC = () => {
   const [loadingTodoIds, setLoadingTodoIds] = useState<number[]>([]);
 
   const filteredTodos = todos.filter(todo => {
-    if (filter === FilterType.All) {
-      return true;
+    switch (filter) {
+      case FilterType.All:
+        return true;
+      case FilterType.Completed:
+        return todo.completed;
+      case FilterType.Active:
+        return !todo.completed;
+      default:
+        return false;
     }
-
-    return filter === FilterType.Completed ? todo.completed : !todo.completed;
   });
 
-  const notCompletedTodos = todos.filter(todo => !todo.completed).length;
+  const notCompletedTodosCount = todos.filter(todo => !todo.completed).length;
   const allTodosAreCompleted = useMemo(
     () => todos.every(todo => todo.completed),
     [todos],
@@ -64,7 +69,6 @@ export const App: React.FC = () => {
     } catch (error) {
       setErrorMessage(ErrorType.DeleteTodo);
       inputNameRef.current?.focus();
-      throw error;
     } finally {
       setLoadingTodoIds(prev => prev.filter(id => id !== todoId));
     }
@@ -84,7 +88,6 @@ export const App: React.FC = () => {
     } catch (error) {
       setErrorMessage(ErrorType.AddTodo);
       inputNameRef.current?.focus();
-      throw error;
     } finally {
       setTempTodo(null);
     }
@@ -108,7 +111,7 @@ export const App: React.FC = () => {
   };
 
   const handletoggleAll = async () => {
-    if (notCompletedTodos > 0) {
+    if (notCompletedTodosCount > 0) {
       const activeTodos = todos.filter(todo => !todo.completed);
 
       activeTodos.forEach(todo =>
@@ -156,7 +159,7 @@ export const App: React.FC = () => {
               handleUpdateTodo={handleUpdateTodo}
             />
             <Footer
-              notCompletedTodos={notCompletedTodos}
+              notCompletedTodosCount={notCompletedTodosCount}
               filter={filter}
               handleFilterChange={handleFilterChange}
               filteredTodos={filteredTodos}

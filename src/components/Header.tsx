@@ -28,13 +28,11 @@ export const Header: React.FC<Props> = props => {
     if (inputNameRef?.current) {
       inputNameRef?.current.focus();
     }
-  }, [todosLength]);
 
-  useEffect(() => {
     if (!isInputDisabled) {
       inputNameRef?.current?.focus();
     }
-  }, [isInputDisabled]);
+  }, [todosLength, isInputDisabled]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);

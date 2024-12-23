@@ -6,8 +6,8 @@ type Props = {
   filter: FilterType;
   notCompletedTodosCount: number;
   handleFilterChange: (newFilter: FilterType) => void;
-  filteredTodos: Todo[];
   handleClearCompleted: () => Promise<void>;
+  todos: Todo[];
 };
 
 export const Footer: React.FC<Props> = props => {
@@ -15,8 +15,8 @@ export const Footer: React.FC<Props> = props => {
     notCompletedTodosCount,
     filter,
     handleFilterChange,
-    filteredTodos,
     handleClearCompleted,
+    todos,
   } = props;
 
   return (
@@ -29,7 +29,7 @@ export const Footer: React.FC<Props> = props => {
         {Object.values(FilterType).map(filterOption => (
           <a
             key={filterOption}
-            href={`#/${filterOption === FilterType.All ? '' : filterOption.toLowerCase()}`}
+            href={`#/${filterOption !== FilterType.All && filterOption.toLowerCase()}`}
             className={cn('filter__link', {
               selected: filter === filterOption,
             })}
@@ -45,7 +45,7 @@ export const Footer: React.FC<Props> = props => {
         type="button"
         className="todoapp__clear-completed"
         data-cy="ClearCompletedButton"
-        disabled={notCompletedTodosCount === filteredTodos.length}
+        disabled={notCompletedTodosCount === todos.length}
         onClick={handleClearCompleted}
       >
         Clear completed

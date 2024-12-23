@@ -25,7 +25,7 @@ export const TodoItem: React.FC<Props> = props => {
     setEditedTodoId,
   } = props;
 
-  const [todoTitleValue, setTodoTitleValue] = useState<string>(todo.title);
+  const [todoTitleValue, setTodoTitleValue] = useState(todo.title);
 
   const inputRef = useRef<HTMLInputElement>(null);
 

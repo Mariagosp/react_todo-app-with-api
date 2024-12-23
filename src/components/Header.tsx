@@ -3,9 +3,9 @@ import { ErrorType } from '../types/ErrorType';
 import cn from 'classnames';
 
 type Props = {
-  handleAddTodo: (todoTitle: string) => Promise<void>;
+  onAddTodo: (todoTitle: string) => Promise<void>;
   setErrorMessage: React.Dispatch<React.SetStateAction<ErrorType>>;
-  handletoggleAll: () => void;
+  onToggleAll: () => void;
   todosLength: number;
   inputNameRef: React.RefObject<HTMLInputElement> | null;
   isInputDisabled: boolean;
@@ -14,9 +14,9 @@ type Props = {
 
 export const Header: React.FC<Props> = props => {
   const {
-    handleAddTodo,
+    onAddTodo,
     setErrorMessage,
-    handletoggleAll,
+    onToggleAll,
     todosLength,
     inputNameRef,
     isInputDisabled,
@@ -48,7 +48,7 @@ export const Header: React.FC<Props> = props => {
     }
 
     try {
-      await handleAddTodo(inputValue.trim());
+      await onAddTodo(inputValue.trim());
       setInputValue('');
     } catch (err) {
     } finally {
@@ -65,7 +65,7 @@ export const Header: React.FC<Props> = props => {
             active: allTodosAreCompleted,
           })}
           data-cy="ToggleAllButton"
-          onClick={handletoggleAll}
+          onClick={onToggleAll}
         />
       )}
 
